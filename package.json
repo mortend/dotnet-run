@@ -6,7 +6,8 @@
     "dotnet-run": "dotnet-run"
   },
   "scripts": {
-    "install": "bash install.sh"
+    "install": "bash install.sh",
+    "test": "node test.js"
   },
   "files": [
     "index.js",
