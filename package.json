@@ -6,13 +6,14 @@
     "dotnet-run": "cli.js"
   },
   "scripts": {
-    "install": "bash install.sh",
+    "install": "node install.js",
     "test": "node test.js"
   },
   "files": [
     "cli.js",
     "index.js",
-    "install.sh"
+    "install.bash",
+    "install.js"
   ],
   "repository": {
     "type": "git",
