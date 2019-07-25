@@ -1,0 +1,10 @@
+matrix:
+  include:
+    - os: osx
+
+script:
+  - npm install
+  - npm run test
+  - npm pack --silent
+  - npm install -g *.tgz
+  - dotnet-run test.exe
