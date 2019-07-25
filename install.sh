@@ -28,7 +28,9 @@ Darwin)
     MONO_URL=https://www.nuget.org/api/v2/package/mono-macOS/$MONO_VERSION
     ;;
 *)
-    echo "ERROR: Unsupported platform $(uname -s)" >&2
+    test-mono mono
+    echo -e "ERROR: Mono was not found" >&2
+    echo -e "\nPlease follow instructions at https://www.mono-project.com/download/ to install Mono, and try again." >&2
     exit 1
     ;;
 esac
