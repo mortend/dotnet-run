@@ -3,13 +3,14 @@
   "version": "1.0.0-rc.1",
   "description": "Runs Mono and .NET assemblies, easily.",
   "bin": {
-    "dotnet-run": "dotnet-run"
+    "dotnet-run": "cli.js"
   },
   "scripts": {
     "install": "bash install.sh",
     "test": "node test.js"
   },
   "files": [
+    "cli.js",
     "index.js",
     "install.sh"
   ],

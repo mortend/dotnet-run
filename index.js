@@ -8,7 +8,8 @@ function dotnet_spawn(filename, args) {
     if (path.sep == '\\')
         return spawn(filename, args, options);
     else {
-        args.unshift(filename);
+        if (filename)
+            args.unshift(filename);
         return spawn(clr, args, options);
     }
 }
