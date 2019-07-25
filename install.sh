@@ -1,5 +1,3 @@
-#!/bin/bash
-
 MONO_VERSION="5.4.1.7"
 
 # Begin script
