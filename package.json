@@ -1,0 +1,30 @@
+{
+  "name": "dotnet-run",
+  "version": "1.0.0-rc.1",
+  "description": "Runs Mono and .NET assemblies, easily.",
+  "bin": {
+    "dotnet-run": "dotnet-run"
+  },
+  "scripts": {
+    "install": "bash install.sh"
+  },
+  "files": [
+    "index.js",
+    "install.sh"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mortend/dotnet-run.git"
+  },
+  "keywords": [
+    "mono",
+    "dotnet",
+    "csharp"
+  ],
+  "author": "Morten Daniel Fornes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mortend/dotnet-run/issues"
+  },
+  "homepage": "https://github.com/mortend/dotnet-run#readme"
+}
