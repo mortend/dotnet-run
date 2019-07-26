@@ -1,0 +1,16 @@
+#!/bin/bash
+cd "`dirname $0`" || exit 1
+set -e
+
+rm -rf mono *.tgz
+/usr/bin/python . "$@"
+
+echo Fixing config file
+sed -i -e 's/\@loader_path\///g' mono/etc/mono/config
+
+echo Creating tarball
+VERSION=`mono/bin/mono --version | head -n1 | egrep -o '[0-9].*-[0-9]' | awk '{print $1;}'`
+FILENAME=mono-$VERSION-macOS.tgz
+
+tar -czvf $FILENAME mono 2> /dev/null
+ls -lh $FILENAME

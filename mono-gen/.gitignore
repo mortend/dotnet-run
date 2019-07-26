@@ -1,4 +1,3 @@
-/mono
-/buildDeps
+*/
 *.pyc
-mono-minimized
+*.tgz

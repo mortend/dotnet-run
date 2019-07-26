@@ -30,13 +30,10 @@ parser.add_argument('--libgdiplus-location', help="\
 Specify the location of libgdiplus (by default found in [MONO_ROOT]/lib). This option expects a directory path to where libgdiplus is located. \
 Used when building from source, since libgdiplus isn't part of that process by default.")
 
-parser.add_argument('--libs-install-id', default='@rpath/Mono/lib', help="\
-Override the install-id that is set for the native libraries. This id is by default '@rpath/Mono/lib'. \
+parser.add_argument('--libs-install-id', default='@loader_path', help="\
+Override the install-id that is set for the native libraries. This id is by default '@loader_path'. \
 ")
 
-parser.add_argument('--clean', default=False, action='store_true', help='Cleanup what is left from last time this command was ran.')
-
-parser.add_argument('--no-pack', default=False, action='store_true', help="Don't pack the result with stuff.")
 args = parser.parse_args()
 
 if args.custom_mono:
@@ -54,8 +51,7 @@ else:
     gdipluslib_location = mono_base_libdir
 
 install_path_prefix = mono_base
-stuff_path = path.join(containing_dir, "..", "..", "Stuff", "stuff")
-minimized_output = path.join(working_dir, 'mono-minimized')
+minimized_output = path.join(working_dir, 'mono')
 
 def create_dirs_if_required(dir_path):
     if not path.exists(dir_path):
@@ -80,7 +76,6 @@ def write_all_text(path, content):
         content_file.write(content)
 
 def minimize():
-    print("# Starting minimization")
     bin_folder = path.join(minimized_output, 'bin')
     lib_folder = path.join(minimized_output, 'lib')
     etc_folder = path.join(minimized_output, 'etc')
@@ -108,10 +103,21 @@ def minimize():
     create_dirs_if_required(path.join(etc_folder, 'fonts'))
     shutil.copy(path.join(containing_dir, 'fonts.conf'), path.join(etc_folder, 'fonts'))
 
-    print("Removing unnecessary files as: *.exe, *.mdb, *.dSYM")
+    print("Removing unnecessary files")
+
     for f in match_file_recursive(minimized_output, ".exe"):
         os.remove(f)
     for f in match_file_recursive(minimized_output, ".mdb"):
+        os.remove(f)
+    for f in match_file_recursive(minimized_output, ".targets"):
+        os.remove(f)
+    for f in match_file_recursive(minimized_output, ".tasks"):
+        os.remove(f)
+    for f in match_file_recursive(minimized_output, ".pdb"):
+        os.remove(f)
+    for f in match_file_recursive(minimized_output, ".xml"):
+        os.remove(f)
+    for f in match_file_recursive(minimized_output, ".xsd"):
         os.remove(f)
     for d in match_file_recursive(minimized_output, ".dSYM"):
         shutil.rmtree(d, ignore_errors=True)
@@ -142,7 +148,8 @@ def minimize():
 
     for list_of_files in [glob.glob(path.join(assemblies_4_5, pattern)) for pattern in assemblies_to_exclude]:
         for f in list_of_files: 
-            if path.exists(f): os.remove(f)
+            if path.exists(f):
+                os.remove(f)
 
     for list_of_dirs in [glob.glob(path.join(assemblies_gac, pattern)) for pattern in assemblies_to_exclude]:
         for d in list_of_dirs:
@@ -150,6 +157,7 @@ def minimize():
     
     print("Copying library dependencies")
     source_base_paths = [install_path_prefix, gdipluslib_location]
+    copy_lib_and_dependencies(path.join(install_path_prefix, 'lib', 'libmono-native-compat.dylib'), lib_folder, args.libs_install_id, source_base_paths)
     copy_lib_and_dependencies(path.join(install_path_prefix, 'lib', 'libmonosgen-2.0.dylib'), lib_folder, args.libs_install_id, source_base_paths)
     copy_lib_and_dependencies(path.join(install_path_prefix, 'lib', 'libMonoPosixHelper.dylib'), lib_folder, args.libs_install_id, source_base_paths)
     copy_lib_and_dependencies(path.join(gdipluslib_location, "libgdiplus.dylib"), lib_folder, args.libs_install_id, source_base_paths)
@@ -157,21 +165,4 @@ def minimize():
     print("Finding remaining absolute paths to mono install")
     fixup_all_dylib_references(lib_folder, args.libs_install_id, source_base_paths)
 
-    print("Done with minimization")
-
-def clean():
-    print("# Cleaning up")
-    if path.exists(minimized_output):
-        shutil.rmtree(minimized_output)
-
-if args.clean:
-    clean()
-
 minimize()
-
-if not args.no_pack:
-    print("# Packing everything with stuff")
-    subprocess.check_call([stuff_path, "pack", "--name", "Mono", "--condition", "OSX", "--out-dir", working_dir, minimized_output])
-    size_in_mb = os.stat(path.join(working_dir, 'Mono.zip')).st_size / 1024 / 1024 
-    print("Final size: " + str(size_in_mb) + " MiB")
-    clean()
