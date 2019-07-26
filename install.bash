@@ -76,7 +76,6 @@ for libA in `ls -1 *.dylib`; do
     done
 
     install_name_tool -id $libA $libA
-    otool -L $libA
 done
 
 sed -i -e 's/\@rpath\/Mono\/lib\///g' ../etc/mono/config
