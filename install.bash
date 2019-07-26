@@ -65,3 +65,18 @@ fi
 get-zip "$MONO_URL" $DOTNET_RUN_HOME
 chmod +x $DOTNET_RUN_HOME/bin/mono
 ln -sfv $DOTNET_RUN_HOME/bin/mono dotnet-run
+
+# Fixup paths in dylibs
+cd $DOTNET_RUN_HOME/lib
+
+IFS=$'\n'
+for libA in `ls -1 *.dylib`; do
+    for libB in `ls -1 *.dylib`; do
+        install_name_tool -change "@rpath/Mono/lib/$libB" "@loader_path/$libB" $libA
+    done
+
+    install_name_tool -id $libA $libA
+    otool -L $libA
+done
+
+sed -i -e 's/\@rpath\/Mono\/lib\///g' ../etc/mono/config
