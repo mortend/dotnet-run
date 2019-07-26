@@ -1,4 +1,4 @@
-MONO_VERSION="5.4.1.7"
+MONO_VERSION="6.0.0.311"
 
 # Begin script
 cd "`dirname "$0"`" || exit 1
@@ -23,7 +23,7 @@ fi
 # Detect platform
 case "$(uname -s)" in
 Darwin)
-    MONO_URL=https://www.nuget.org/api/v2/package/mono-macOS/$MONO_VERSION
+    MONO_URL=https://github.com/mortend/dotnet-run/releases/download/mono-$MONO_VERSION-macOS/mono-$MONO_VERSION-macOS.tgz
     ;;
 *)
     test-mono mono
@@ -40,42 +40,27 @@ function download-error {
     exit 1
 }
 
-function get-zip {
+function get-tgz {
     local url=$1
     local dir=$2
-    local zip=`basename "$2"`.zip
+    local tgz=`basename "$2"`.tgz
 
-    if [ -f "$zip" ]; then
-        rm -rf "$dir" "$zip"
+    if [ -f "$tgz" ]; then
+        rm -rf "$dir" "$tgz"
     elif [ -d "$dir" ]; then
         return
     fi
 
     echo "Downloading $url"
-    curl -# -L "$url" -o "$zip" -S --retry 3 || download-error
+    curl -# -L "$url" -o "$tgz" -S --retry 3 || download-error
     mkdir -p "$dir"
-    unzip -q "$zip" -d "$dir" || download-error
-    rm -rf "$zip"
+    tar -xzf "$tgz" -C "$dir" || download-error
+    rm -rf "$tgz"
 }
 
 if [ -z "$DOTNET_RUN_HOME" ]; then
     DOTNET_RUN_HOME=~/.dotnet-run
 fi
 
-get-zip "$MONO_URL" $DOTNET_RUN_HOME
-chmod +x $DOTNET_RUN_HOME/bin/mono
-ln -sfv $DOTNET_RUN_HOME/bin/mono dotnet-run
-
-# Fixup paths in dylibs
-cd $DOTNET_RUN_HOME/lib
-
-IFS=$'\n'
-for libA in `ls -1 *.dylib`; do
-    for libB in `ls -1 *.dylib`; do
-        install_name_tool -change "@rpath/Mono/lib/$libB" "@loader_path/$libB" $libA
-    done
-
-    install_name_tool -id $libA $libA
-done
-
-sed -i -e 's/\@rpath\/Mono\/lib\///g' ../etc/mono/config
+get-tgz "$MONO_URL" "$DOTNET_RUN_HOME"
+ln -sfv "$DOTNET_RUN_HOME/mono/bin/mono" dotnet-run
