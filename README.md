@@ -12,9 +12,26 @@
 npm install dotnet-run
 ```
 
-This will detect your existing [Mono](https://www.mono-project.com/) installation or automatically download a suitable version for your system.
+This will detect your existing .NET Framework/[Mono](https://www.mono-project.com/) or automatically download a suitable version for your system.
 
-We provide minimal Mono releases much smaller than official releases. For example, our Mono 6.0.0.311 for macOS is a 33.4 MB tarball, which installs faster and is more than ten times smaller than the official pkg installer at 362.2 MB.
+### macOS
+
+![download](https://img.shields.io/badge/download-automatic-brightgreen?style=flat-square)
+![mono](https://img.shields.io/badge/mono-v6.0.0.311-blue?style=flat-square)
+
+We provide minimal Mono releases for macOS, much smaller than official releases. Our v6.0.0.311 is distributed as a 33.4 MB tarball, which installs faster and is more than ten times smaller than the official pkg installer at 362.2 MB.
+
+### Linux
+
+![download](https://img.shields.io/badge/download-manual-orange?style=flat-square)
+
+Linux users must currently provide their own Mono installation before consuming this package. More information can be found on [this page](https://www.mono-project.com/download/).
+
+### Windows
+
+![download](https://img.shields.io/badge/download-pre--installed-brightgreen?style=flat-square)
+
+Windows users don't need to download anything because .NET Framework is pre-installed on this system.
 
 ## Usage
 
