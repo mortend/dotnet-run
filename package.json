@@ -1,7 +1,7 @@
 {
   "name": "dotnet-run",
   "version": "1.0.0-rc.3",
-  "description": "Runs Mono and .NET assemblies, easily.",
+  "description": "Run Mono and .NET programs, easily.",
   "bin": {
     "dotnet-run": "cli.js"
   },
@@ -13,7 +13,8 @@
     "cli.js",
     "index.js",
     "install.bash",
-    "install.js"
+    "install.js",
+    "version-gte.js"
   ],
   "repository": {
     "type": "git",
