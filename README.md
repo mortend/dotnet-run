@@ -4,7 +4,7 @@
 [![NPM package](https://img.shields.io/npm/v/dotnet-run.svg?style=flat-square)](https://www.npmjs.com/package/dotnet-run)
 [![License: MIT](https://img.shields.io/github/license/mortend/dotnet-run.svg?style=flat-square)](LICENSE)
 
-> Runs Mono and .NET assemblies, easily.
+> Run Mono and .NET programs, easily.
 
 ## Install
 
@@ -12,26 +12,30 @@
 npm install dotnet-run
 ```
 
-This will detect your existing .NET Framework/[Mono](https://www.mono-project.com/) or automatically download a suitable version for your system.
+This will detect [Mono](https://www.mono-project.com/)/.NET or automatically download a suitable version for your system.
 
 ### macOS
 
-![download](https://img.shields.io/badge/download-automatic-brightgreen?style=flat-square)
-![mono](https://img.shields.io/badge/mono-v6.0.0.311-blue?style=flat-square)
+![installation](https://img.shields.io/badge/installation-automatic-brightgreen?style=flat-square)
+![mono](https://img.shields.io/badge/mono->=%20v5.4.1.7-blue?style=flat-square)
+![default](https://img.shields.io/badge/default-v6.0.0.311-blue?style=flat-square)
 
-We provide minimal Mono releases for macOS, much smaller than official releases. Our v6.0.0.311 is distributed as a 33.4 MB tarball, which installs faster and is more than ten times smaller than the official pkg installer at 362.2 MB.
+When we can find Mono v5.4.1.7 or greater on your system, we'll use your existing installation. By default we'll download v6.0.0.311 automatically.
+
+We provide minimal Mono releases for macOS, much smaller than official releases. Our v6.0.0.311 is distributed as a 33.6 MB tarball, which installs faster and is more than ten times smaller than the official pkg installer at 362.2 MB. Our package is unobtrusive to your system and will safely co-exist with any existing Mono installation you may or may not have from before.
 
 ### Linux
 
-![download](https://img.shields.io/badge/download-manual-orange?style=flat-square)
+![installation](https://img.shields.io/badge/installation-manual-orange?style=flat-square)
+![mono](https://img.shields.io/badge/mono->=%20v5.4.1.7-blue?style=flat-square)
 
 Linux users must currently provide their own Mono installation before consuming this package. More information can be found on [this page](https://www.mono-project.com/download/).
 
 ### Windows
 
-![download](https://img.shields.io/badge/download-pre--installed-brightgreen?style=flat-square)
+![installation](https://img.shields.io/badge/installation-pre--installed-brightgreen?style=flat-square)
 
-Windows users don't need to download anything because .NET Framework is pre-installed on this system.
+Windows users don't need to download anything because .NET is pre-installed on this system.
 
 ## Usage
 
