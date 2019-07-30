@@ -2,7 +2,7 @@ const path = require('path');
 const {spawn} = require('child_process');
 
 function dotnet_spawn(filename, args) {
-    const clr = path.join(__dirname, 'dotnet-run');
+    const mono = path.join(__dirname, 'mono');
     const options = {stdio: 'inherit'};
 
     if (path.sep == '\\')
@@ -10,7 +10,7 @@ function dotnet_spawn(filename, args) {
     else {
         if (filename)
             args.unshift(filename);
-        return spawn(clr, args, options);
+        return spawn(mono, args, options);
     }
 }
 

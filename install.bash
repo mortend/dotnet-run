@@ -23,14 +23,14 @@ function version-gte {
 function success-if-compatible {
     if which "$1" > /dev/null 2>&1; then
         if version-gte "$1" "$MIN_MONO_VERSION"; then
-            ln -sfv "`which "$1"`" dotnet-run
+            ln -sfv "`which "$1"`" mono
             exit 0
         fi
     fi
 }
 
 if [ "$FORCE_MONO_DOWNLOAD" != 1 ]; then
-    if [ -f ./dotnet-run ]; then
+    if [ -f ./mono ]; then
         exit 0
     fi
 
