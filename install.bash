@@ -22,7 +22,12 @@ function version-gte {
         return 0
     fi
 
-    node version-gte.js "$version" "$2"
+    if node version-gte.js "$version" "$2"; then
+        echo "Using Mono version $version from '$1'."
+        return 0
+    fi
+
+    return 1
 }
 
 function success-if-compatible {
