@@ -17,6 +17,11 @@ function version-gte {
     fi
 
     local version=`"$1" --version | node get-version.js`
+    if [ -z "$version" ]; then
+        echo -e "WARNING: Failed to detect version of '$1'." >&2
+        return 0
+    fi
+
     node version-gte.js "$version" "$2"
 }
 
