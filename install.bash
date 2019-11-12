@@ -32,9 +32,9 @@ function version-gte {
 
 function success-if-compatible {
     if which "$1" > /dev/null 2>&1; then
-        if version-gte "$1" "$MIN_MONO_VERSION"; then
-            ln -sfv "`which "$1"`" mono
-            exit 0
+        local mono=`which "$1"`
+        if version-gte "$mono" "$MIN_MONO_VERSION"; then
+            ln -sf "$mono" mono && exit 0
         fi
     fi
 }
@@ -78,7 +78,7 @@ function get-tgz {
     if [ -f "$tgz" ]; then
         rm -rf "$dir" "$tgz"
     elif [ -d "$dir" ]; then
-        if version-gte "$dir/mono/bin/mono" $MONO_VERSION; then
+        if version-gte "$dir/mono/bin/mono" "$MONO_VERSION"; then
             return
         fi
     fi
