@@ -1,0 +1,12 @@
+version: '{build}'
+
+build_script:
+  - npm pack
+
+artifacts:
+  - path: '*.tgz'
+
+test_script:
+  - npm run test
+  - bash -c "npm install -g *.tgz"
+  - dotnet-run test.exe
