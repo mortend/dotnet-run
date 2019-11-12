@@ -11,6 +11,7 @@
   },
   "files": [
     "cli.js",
+    "get-version.js",
     "index.js",
     "install.bash",
     "install.js",

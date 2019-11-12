@@ -16,7 +16,7 @@ function version-gte {
         return 0
     fi
 
-    local version=`"$1" --version | head -n1 | egrep -o '[0-9].*-[0-9]' | awk '{print $1;}'`
+    local version=`"$1" --version | node get-version.js`
     node version-gte.js "$version" "$2"
 }
 
