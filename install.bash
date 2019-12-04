@@ -45,7 +45,9 @@ function success-if-compatible {
 
 if [ "$FORCE_MONO_DOWNLOAD" != 1 ]; then
     if [ -f "$SYMLINK_MONO" ]; then
-        exit 0
+        if version-gte "$SYMLINK_MONO" "$MIN_MONO_VERSION"; then
+            exit 0
+        fi
     fi
 
     success-if-compatible "$DOTNET_RUN_HOME/mono/bin/mono"
