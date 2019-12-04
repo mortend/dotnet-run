@@ -46,7 +46,7 @@ function compareVersionNumbers(v1, v2){
         if (v1parts[i] === v2parts[i]) {
             continue;
         }
-        if (v1parts[i] > v2parts[i]) {
+        if (1 * v1parts[i] > 1 * v2parts[i]) {
             return 1;
         }
         return -1;
