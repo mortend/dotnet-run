@@ -77,7 +77,7 @@ function download-error {
 function get-tgz {
     local url=$1
     local dir=$2
-    local tgz=`basename "$2"`.tgz
+    local tgz=$2.tgz
 
     if [ -f "$tgz" ]; then
         rm -rf "$dir" "$tgz"
