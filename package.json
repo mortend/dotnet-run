@@ -1,6 +1,6 @@
 {
   "name": "dotnet-run",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Run Mono and .NET programs, easily.",
   "bin": {
     "dotnet-run": "cli.js"
