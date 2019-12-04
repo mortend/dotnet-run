@@ -30,17 +30,21 @@ function version-gte {
     return 1
 }
 
+SYMLINK_DIR="$DOTNET_RUN_HOME/.bin"
+SYMLINK_MONO="$SYMLINK_DIR/mono"
+
 function success-if-compatible {
     if which "$1" > /dev/null 2>&1; then
         local mono=`which "$1"`
         if version-gte "$mono" "$MIN_MONO_VERSION"; then
-            ln -sf "$mono" mono && exit 0
+            mkdir -p "$SYMLINK_DIR"
+            ln -sf "$mono" "$SYMLINK_MONO" && exit 0
         fi
     fi
 }
 
 if [ "$FORCE_MONO_DOWNLOAD" != 1 ]; then
-    if [ -f ./mono ]; then
+    if [ -f "$SYMLINK_MONO" ]; then
         exit 0
     fi
 

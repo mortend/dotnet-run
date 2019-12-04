@@ -2,7 +2,8 @@ const path = require('path');
 const {spawn} = require('child_process');
 
 function dotnet_spawn(filename, args) {
-    const mono = path.join(__dirname, 'mono');
+    const home = process.env.DOTNET_RUN_HOME || '~/.dotnet-run'
+    const mono = path.join(home, '.bin', 'mono');
     const options = {stdio: 'inherit'};
 
     if (path.sep == '\\')
