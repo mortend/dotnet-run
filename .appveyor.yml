@@ -9,4 +9,4 @@ artifacts:
 test_script:
   - npm run test
   - bash -c "npm install -g *.tgz"
-  - dotnet-run test.exe
+  - dotnet-run test\test.exe

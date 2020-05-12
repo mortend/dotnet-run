@@ -10,4 +10,4 @@ script:
   - npm run test
   - npm pack --silent
   - npm install -g *.tgz
-  - dotnet-run test.exe
+  - dotnet-run test/test.exe

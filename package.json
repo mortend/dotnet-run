@@ -3,19 +3,15 @@
   "version": "1.2.0",
   "description": "Run Mono and .NET programs, easily.",
   "bin": {
-    "dotnet-run": "cli.js"
+    "dotnet-run": "bin/cli.js"
   },
   "scripts": {
-    "install": "node install.js",
-    "test": "node test.js"
+    "install": "node lib/install.js",
+    "test": "node test/test.js"
   },
   "files": [
-    "cli.js",
-    "get-version.js",
-    "index.js",
-    "install.bash",
-    "install.js",
-    "version-gte.js"
+    "bin/*",
+    "lib/*"
   ],
   "repository": {
     "type": "git",
