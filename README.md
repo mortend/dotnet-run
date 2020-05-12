@@ -4,39 +4,41 @@
 [![Travis CI build status](https://img.shields.io/travis/mortend/dotnet-run/master.svg?style=flat-square)](https://travis-ci.org/mortend/dotnet-run)
 [![NPM package](https://img.shields.io/npm/v/dotnet-run.svg?style=flat-square)](https://www.npmjs.com/package/dotnet-run)
 [![License: MIT](https://img.shields.io/github/license/mortend/dotnet-run.svg?style=flat-square)](LICENSE)
+![Supported platforms](https://img.shields.io/badge/os-Linux%20%7C%20macOS%20%7C%20Windows-7F5AB6?style=flat-square)
 
-> Run Mono and .NET programs, easily.
+> Run Mono and .NET programs easily on all platforms.
 
 ## Install
 
 ```
-npm install dotnet-run
+$ npm install dotnet-run
 ```
 
 This will detect [Mono](https://www.mono-project.com/)/.NET or automatically download a suitable version for your system.
 
 ### macOS
 
-![installation](https://img.shields.io/badge/installation-automatic-brightgreen?style=flat-square)
-![mono](https://img.shields.io/badge/mono->=%20v5.4.1.7-blue?style=flat-square)
+![install](https://img.shields.io/badge/install-automatic-brightgreen?style=flat-square&logo=apple&logoColor=silver)
+![mono](https://img.shields.io/badge/mono->=%20v5.4.1.7-7F5AB6?style=flat-square)
 ![default](https://img.shields.io/badge/default-v6.0.0.311-blue?style=flat-square)
+![downloads](https://img.shields.io/github/downloads/mortend/dotnet-run/total?color=blue&style=flat-square)
 
-When we can find Mono v5.4.1.7 or greater on your system, we'll use your existing installation. By default we'll download v6.0.0.311 automatically.
+Unless we can find Mono v5.4.1.7 or greater on your system, we will download v6.0.0.311 for you automatically.
 
-We provide minimal Mono releases for macOS, much smaller than official releases. Our v6.0.0.311 is distributed as a 33.6 MB tarball, which installs faster and is more than ten times smaller than the official pkg installer at 362.2 MB. Our package is unobtrusive to your system and will safely co-exist with any existing Mono installation you may or may not have from before.
+> We provide minimal Mono releases for macOS, much smaller than official releases. Our v6.0.0.311 is distributed as a 33.6 MB tarball, which installs faster and is more than ten times smaller than the official pkg installer at 362.2 MB. Our package is unobtrusive to your system and will safely co-exist with any existing Mono install you may or may not have from before.
 
 ### Linux
 
-![installation](https://img.shields.io/badge/installation-manual-orange?style=flat-square)
-![mono](https://img.shields.io/badge/mono->=%20v5.4.1.7-blue?style=flat-square)
+![install](https://img.shields.io/badge/install-manual-orange?style=flat-square&logo=linux&logoColor=silver)
+![mono](https://img.shields.io/badge/mono->=%20v5.4.1.7-7F5AB6?style=flat-square)
 
-Linux users must currently provide their own Mono installation before consuming this package. More information can be found on [this page](https://www.mono-project.com/download/).
+Linux users must provide their own Mono install before consuming this package. More information can be found on [this page](https://www.mono-project.com/download/).
 
 ### Windows
 
-![installation](https://img.shields.io/badge/installation-pre--installed-brightgreen?style=flat-square)
+![install](https://img.shields.io/badge/install-built--in-brightgreen?style=flat-square&logo=windows&logoColor=silver)
 
-Windows users don't need to download anything because .NET is pre-installed on this system.
+We will use the built-in .NET Framework on Windows.
 
 ## Usage
 
