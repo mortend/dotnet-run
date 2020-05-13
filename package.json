@@ -1,7 +1,7 @@
 {
   "name": "dotnet-run",
   "version": "1.2.0",
-  "description": "Run Mono and .NET programs, easily.",
+  "description": "Run Mono and .NET programs easily on all platforms.",
   "bin": {
     "dotnet-run": "bin/cli.js"
   },
@@ -20,7 +20,8 @@
   "keywords": [
     "mono",
     "dotnet",
-    "csharp"
+    "cross-platform",
+    "installer"
   ],
   "author": "Morten Daniel Fornes",
   "license": "MIT",
