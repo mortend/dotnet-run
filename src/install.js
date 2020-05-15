@@ -3,7 +3,7 @@ const {spawn} = require('child_process');
 
 if (path.sep == '\\') {
     // Windows has .NET built-in.
-    console.log("Using built-in .NET Framework on Windows.");
+    console.log("using built-in .NET Framework on Windows");
     process.exit(0);
 }
 
