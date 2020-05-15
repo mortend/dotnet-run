@@ -42,13 +42,15 @@ We use the built-in .NET Framework on Windows.
 
 ## Usage
 
+### JavaScript
+
 ```js
 const run = require('dotnet-run');
 
 run('bang.exe', ['pong', 'pang'], process.exit);
 ```
 
-or, in Terminal:
+### Terminal
 
 ```
 $ dotnet-run bang.exe pong pang
