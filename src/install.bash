@@ -2,9 +2,15 @@ if [ -z "$DOTNET_RUN_HOME" ]; then
     DOTNET_RUN_HOME=~/.dotnet-run
 fi
 
-if [ -z "$MIN_MONO_VERSION" ]; then
-    MIN_MONO_VERSION="5.4.1.7"
+if [ -z "$MONO_VERSION" ]; then
+    MONO_VERSION="6.0.0.311"
 fi
+
+case "$(uname -s)" in
+Darwin)
+    MONO_URL=https://github.com/mortend/dotnet-run/releases/download/mono-$MONO_VERSION-macOS/mono-$MONO_VERSION-macOS.tgz
+    ;;
+esac
 
 # Begin script
 cd "`dirname "$0"`" || exit 1
@@ -36,7 +42,7 @@ SYMLINK_MONO="$SYMLINK_DIR/mono"
 function success-if-compatible {
     if which "$1" > /dev/null 2>&1; then
         local mono=`which "$1"`
-        if version-gte "$mono" "$MIN_MONO_VERSION"; then
+        if version-gte "$mono" "$MONO_VERSION"; then
             mkdir -p "$SYMLINK_DIR"
             ln -sf "$mono" "$SYMLINK_MONO" && exit 0
         fi
@@ -45,7 +51,7 @@ function success-if-compatible {
 
 if [ "$FORCE_MONO_DOWNLOAD" != 1 ]; then
     if [ -f "$SYMLINK_MONO" ]; then
-        if version-gte "$SYMLINK_MONO" "$MIN_MONO_VERSION"; then
+        if version-gte "$SYMLINK_MONO" "$MONO_VERSION"; then
             exit 0
         fi
     fi
@@ -55,19 +61,12 @@ if [ "$FORCE_MONO_DOWNLOAD" != 1 ]; then
     success-if-compatible mono
 fi
 
-# Detect platform
-case "$(uname -s)" in
-Darwin)
-    MONO_VERSION="6.0.0.311"
-    MONO_URL=https://github.com/mortend/dotnet-run/releases/download/mono-$MONO_VERSION-macOS/mono-$MONO_VERSION-macOS.tgz
-    ;;
-*)
+if [ -z "$MONO_URL" ]; then
     success-if-compatible mono
-    echo -e "ERROR: Mono (>= $MIN_MONO_VERSION) was not found." >&2
+    echo -e "ERROR: Mono (>= $MONO_VERSION) was not found." >&2
     echo -e "\nPlease follow instructions at https://www.mono-project.com/download/ to install Mono, and try again." >&2
     exit 1
-    ;;
-esac
+fi
 
 # Download Mono
 function download-error {

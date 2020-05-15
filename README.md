@@ -18,27 +18,27 @@ This will detect [Mono](https://www.mono-project.com/)/.NET or automatically dow
 
 ### macOS
 
-![install](https://img.shields.io/badge/install-automatic-brightgreen?style=flat-square&logo=apple&logoColor=silver)
-![mono](https://img.shields.io/badge/mono->=%20v5.4.1.7-7F5AB6?style=flat-square)
-![default](https://img.shields.io/badge/default-v6.0.0.311-blue?style=flat-square)
+![install](https://img.shields.io/badge/install-auto-brightgreen?style=flat-square&logo=apple&logoColor=silver)
+![mono](https://img.shields.io/badge/mono-v6.0.0.311-blue?style=flat-square)
 ![downloads](https://img.shields.io/github/downloads/mortend/dotnet-run/total?color=blue&style=flat-square)
 
-Unless we can find Mono v5.4.1.7 or greater on your system, we will download v6.0.0.311 for you automatically.
+Unless we can find Mono v6.0.0.311 or greater on your system, we will provide you a minimal Mono installation automatically.
 
 > We provide minimal Mono releases for macOS, much smaller than official releases. Our v6.0.0.311 is distributed as a 33.6 MB tarball, which installs faster and is more than ten times smaller than the official pkg installer at 362.2 MB. Our package is unobtrusive to your system and will safely co-exist with any existing Mono install you may or may not have from before.
 
 ### Linux
 
 ![install](https://img.shields.io/badge/install-manual-orange?style=flat-square&logo=linux&logoColor=silver)
-![mono](https://img.shields.io/badge/mono->=%20v5.4.1.7-7F5AB6?style=flat-square)
+![mono](https://img.shields.io/badge/mono-v6.0.0.311-blue?style=flat-square)
 
 Linux users must provide their own Mono install before consuming this package. More information can be found on [this page](https://www.mono-project.com/download/).
 
 ### Windows
 
-![install](https://img.shields.io/badge/install-built--in-brightgreen?style=flat-square&logo=windows&logoColor=silver)
+![install](https://img.shields.io/badge/install-auto-brightgreen?style=flat-square&logo=windows&logoColor=silver)
+![install](https://img.shields.io/badge/netfx-built--in-blue?style=flat-square)
 
-We will use the built-in .NET Framework on Windows.
+We use the built-in .NET Framework on Windows.
 
 ## Usage
 
