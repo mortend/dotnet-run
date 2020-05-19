@@ -18,6 +18,9 @@ set -e
 
 # Detect installed Mono
 function version-gte {
+    # Test that command works
+    "$1" --version > /dev/null 2> /dev/null || return 1
+
     if [ -z "$2" ]; then
         return 0
     fi
