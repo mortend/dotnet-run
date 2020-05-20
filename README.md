@@ -3,6 +3,7 @@
 [![AppVeyor build status](https://img.shields.io/appveyor/ci/mortend/dotnet-run/master.svg?logo=appveyor&logoColor=silver&style=flat-square)](https://ci.appveyor.com/project/mortend/dotnet-run/branch/master)
 [![Travis CI build status](https://img.shields.io/travis/mortend/dotnet-run/master.svg?style=flat-square)](https://travis-ci.org/mortend/dotnet-run)
 [![NPM package](https://img.shields.io/npm/v/dotnet-run.svg?style=flat-square)](https://www.npmjs.com/package/dotnet-run)
+[![NPM downloads](https://img.shields.io/npm/dt/dotnet-run?color=blue&style=flat-square)](https://www.npmjs.com/package/dotnet-run)
 [![License: MIT](https://img.shields.io/github/license/mortend/dotnet-run.svg?style=flat-square)](LICENSE)
 ![Supported platforms](https://img.shields.io/badge/os-Linux%20%7C%20macOS%20%7C%20Windows-7F5AB6?style=flat-square)
 
