@@ -8,7 +8,7 @@ fi
 
 case "$(uname -s)" in
 Darwin)
-    MONO_URL=https://github.com/mortend/dotnet-run/releases/download/mono-$MONO_VERSION-macOS/mono-$MONO_VERSION-macOS.tgz
+    MONO_URL=https://github.com/mortend/dotnet-run/releases/download/mono-6.0.0.311/mono-6.0.0.311-mac.tgz
     ;;
 esac
 
