@@ -42,9 +42,21 @@ function version-gte {
 SYMLINK_DIR="$DOTNET_RUN_HOME/.bin"
 SYMLINK_MONO="$SYMLINK_DIR/mono"
 
+function resolve-symlinks {
+    local path=$1
+    while [ -h "$path" ]; do
+        local dir="$( cd -P "$( dirname "$path" )" && pwd )"
+        local path="$(readlink "$path")"
+        [[ "$path" != /* ]] && path="$dir/$path"
+    done
+
+    echo $path
+}
+
 function success-if-compatible {
     if which "$1" > /dev/null 2>&1; then
         local mono=`which "$1"`
+        local mono=`resolve-symlinks "$mono"`
         if version-gte "$mono" "$MONO_VERSION"; then
             mkdir -p "$SYMLINK_DIR"
             ln -sf "$mono" "$SYMLINK_MONO" && exit 0
@@ -54,7 +66,8 @@ function success-if-compatible {
 
 if [ "$FORCE_MONO_DOWNLOAD" != 1 ]; then
     if [ -f "$SYMLINK_MONO" ]; then
-        if version-gte "$SYMLINK_MONO" "$MONO_VERSION"; then
+        MONO=`resolve-symlinks "$SYMLINK_MONO"`
+        if version-gte "$MONO" "$MONO_VERSION"; then
             exit 0
         fi
     fi
