@@ -9,7 +9,7 @@ echo Fixing config file
 sed -i -e 's/\@loader_path\///g' mono/etc/mono/config
 
 echo Creating tarball
-VERSION=`mono/bin/mono --version | head -n1 | egrep -o '[0-9].*-[0-9]' | awk '{print $1;}'`
+VERSION=`mono/bin/mono --version | node ../src/get-version.js`
 FILENAME=mono-$VERSION-mac.tgz
 
 if [ -z "$VERSION" ]; then
@@ -18,4 +18,4 @@ if [ -z "$VERSION" ]; then
 fi
 
 tar -czvf $FILENAME mono 2> /dev/null
-ls -lh $FILENAME
+du -k $FILENAME
