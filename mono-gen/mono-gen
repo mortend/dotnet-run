@@ -12,5 +12,10 @@ echo Creating tarball
 VERSION=`mono/bin/mono --version | head -n1 | egrep -o '[0-9].*-[0-9]' | awk '{print $1;}'`
 FILENAME=mono-$VERSION-mac.tgz
 
+if [ -z "$VERSION" ]; then
+    echo "E: Invalid version. Broken mono?" >&2
+    exit 1
+fi
+
 tar -czvf $FILENAME mono 2> /dev/null
 ls -lh $FILENAME
