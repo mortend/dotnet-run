@@ -17,26 +17,38 @@ cd "`dirname "$0"`" || exit 1
 set -e
 
 # Detect installed Mono
-function version-gte {
+function version-test {
+    local mono="$1"
+    local op="$2"
+    local other_version="$3"
+
     # Test that command works
-    "$1" --version > /dev/null 2> /dev/null || return 1
+    "$mono" --version > /dev/null 2> /dev/null || return 1
 
-    if [ -z "$2" ]; then
+    if [ -z "$other_version" ]; then
         return 0
     fi
 
-    local version=`"$1" --version | node get-version.js`
+    local version=`"$mono" --version | node get-version.js`
     if [ -z "$version" ]; then
-        echo -e "WARNING: Failed to detect version of '$1'." >&2
+        echo -e "WARNING: Failed to detect version of '$mono'." >&2
         return 0
     fi
 
-    if node version-gte.js "$version" "$2"; then
-        echo "using Mono version $version from $1"
+    if node version-$op.js "$version" "$other_version"; then
+        echo "using Mono version $version from $mono"
         return 0
     fi
 
     return 1
+}
+
+function version-gte {
+    version-test "$1" gte "$2"
+}
+
+function version-gt {
+    version-test "$1" gt "$2"
 }
 
 SYMLINK_DIR="$DOTNET_RUN_HOME/.bin"
@@ -64,9 +76,28 @@ function success-if-compatible {
     fi
 }
 
+function success-if-newer-than {
+    if which "$1" > /dev/null 2>&1; then
+        local mono=`which "$1"`
+        local mono=`resolve-symlinks "$mono"`
+        if version-gt "$mono" "$2"; then
+            mkdir -p "$SYMLINK_DIR"
+            ln -sf "$mono" "$SYMLINK_MONO" && exit 0
+        fi
+    fi
+}
+
 if [ "$FORCE_MONO_DOWNLOAD" != 1 ]; then
     if [ -f "$SYMLINK_MONO" ]; then
         MONO=`resolve-symlinks "$SYMLINK_MONO"`
+
+        # If already exists, check if a newer version is installed on the system
+        symlink_version=`"$MONO" --version | node get-version.js`
+        if [ -n "$symlink_version" ]; then
+            success-if-newer-than mono64 "$symlink_version"
+            success-if-newer-than mono "$symlink_version"
+        fi
+
         if version-gte "$MONO" "$MONO_VERSION"; then
             exit 0
         fi
