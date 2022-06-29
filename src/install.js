@@ -12,4 +12,7 @@ spawn('bash', [
     path.join(__dirname, 'install.bash')
 ], {
     stdio: 'inherit'
-}).on('exit', process.exit);
+}).on('exit', () => {
+    // Always return 0 -- don't want 'npm install' to fail.
+    process.exit(0);
+});
