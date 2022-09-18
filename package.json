@@ -6,12 +6,10 @@
     "dotnet-run": "bin/cli.js"
   },
   "scripts": {
-    "install": "node src/install.js",
     "test": "node test/test.js"
   },
   "files": [
     "bin/*",
-    "src/*",
     "index.js"
   ],
   "repository": {
@@ -19,10 +17,9 @@
     "url": "git+https://github.com/mortend/dotnet-run.git"
   },
   "keywords": [
-    "mono",
-    "dotnet",
     "cross-platform",
-    "installer"
+    "dotnet",
+    "helper"
   ],
   "author": "Morten Daniel Fornes",
   "license": "MIT",
