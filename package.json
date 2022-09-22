@@ -1,6 +1,6 @@
 {
   "name": "dotnet-run",
-  "version": "1.5.0",
+  "version": "2.0.0-beta.0",
   "description": "Run Mono and .NET programs easily on all platforms.",
   "bin": {
     "dotnet-run": "bin/cli.js"
