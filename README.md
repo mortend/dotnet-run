@@ -21,14 +21,8 @@ $ npm install dotnet-run
 const run = require('dotnet-run');
 
 run('hello.dll', ['javascript', 'typescript'], process.exit);
-```
 
-### Terminal
-
-```
-$ dotnet-run hello.dll javascript typescript
-
-Hello, javascript and typescript!
+// => Hello, javascript and typescript!
 ```
 
 ## Contributing

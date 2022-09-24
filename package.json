@@ -1,15 +1,11 @@
 {
   "name": "dotnet-run",
   "version": "2.0.0-beta.0",
-  "description": "Run Mono and .NET programs easily on all platforms.",
-  "bin": {
-    "dotnet-run": "bin/cli.js"
-  },
+  "description": "Run .NET programs easily on all platforms",
   "scripts": {
     "test": "node test/test.js"
   },
   "files": [
-    "bin/*",
     "index.js"
   ],
   "repository": {

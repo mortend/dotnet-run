@@ -9,5 +9,3 @@ artifacts:
 
 test_script:
   - npm test
-  - bash -c "npm install -g *.tgz"
-  - dotnet-run test\net6.0\test.dll
