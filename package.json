@@ -2,6 +2,9 @@
   "name": "dotnet-run",
   "version": "2.0.0-beta.0",
   "description": "Run .NET programs easily on all platforms",
+  "dependencies": {
+    "which": "^2.0.2"
+  },
   "scripts": {
     "test": "node test/test.js"
   },

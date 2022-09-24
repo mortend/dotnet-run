@@ -2,6 +2,7 @@ version: '{build}'
 image: Visual Studio 2022
 
 build_script:
+  - npm install
   - npm pack
 
 artifacts:
