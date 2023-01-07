@@ -1,3 +1,6 @@
+const fs = require("fs")
+const os = require("os")
+const path = require("path")
 const which = require("which")
 const { spawn } = require("child_process")
 
@@ -8,6 +11,14 @@ function getDotNetPath() {
     }) || []) {
         return dotnet
     }
+
+    // ~/.dotnet/dotnet
+    const homedir = os.homedir()
+    const dotnetHome = path.join(homedir, ".dotnet")
+    const dotnetHomeExe = path.join(dotnetHome, "dotnet")
+
+    if (fs.existsSync(dotnetHomeExe))
+        return dotnetHomeExe
 }
 
 function suggestSolutions() {
