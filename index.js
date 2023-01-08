@@ -55,3 +55,5 @@ module.exports = (filename, args, callback) => {
         callback(0x7f)
     }
 }
+
+module.exports.getDotNetPath = getDotNetPath

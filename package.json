@@ -3,13 +3,17 @@
   "version": "2.0.0-beta.1",
   "description": "Run .NET programs easily on all platforms",
   "dependencies": {
-    "which": "^2.0.2"
+    "readline-sync": "^1.4.10",
+    "which": "^2.0.2",
+    "xbash": "^1.6.0"
   },
   "scripts": {
+    "install": "node install.js",
     "test": "node test/test.js"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "install.js"
   ],
   "repository": {
     "type": "git",
