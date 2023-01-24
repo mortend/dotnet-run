@@ -3,6 +3,8 @@ const os = require("os")
 const path = require("path")
 const which = require("which")
 const { spawn } = require("child_process")
+const readlineSync = require("readline-sync")
+const bash = require("xbash")
 
 function getDotNetPath() {
     for (const dotnet of which.sync("dotnet", {
@@ -27,6 +29,23 @@ function getDotNetPath() {
 
         if (fs.existsSync(dotnetHomeExe))
             return dotnetHomeExe
+    }
+}
+
+function installDotNet(callback) {
+    // https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
+
+    if (process.platform === "win32") {
+        const ps = spawn("powershell.exe", [
+            "-NoProfile", "-ExecutionPolicy", "unrestricted", "-Command",
+            "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://dot.net/v1/dotnet-install.ps1')))"
+        ])
+        ps.stdout.on("data", data => console.log(data.toString()))
+        ps.stderr.on("data", data => console.error(data.toString()))
+        ps.on("exit", callback)
+        ps.stdin.end()
+    } else {
+        bash(["-c", "curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin"], callback)
     }
 }
 
@@ -60,9 +79,31 @@ module.exports = (filename, args, callback) => {
             .on("exit", callback)
     } else {
         console.error("fatal: The 'dotnet' command was not found")
-        suggestSolutions()
-        callback(0x7f)
+
+        if (!process.stdout.isTTY ||
+            !readlineSync.keyInYN("\nDo you want to install .NET now?")) {
+            suggestSolutions()
+            callback(0x7f)
+        }
+
+        installDotNet(result => {
+            console.log("\n.NET installer completed:", result)
+
+            const dotnet2 = getDotNetPath()
+
+            if (dotnet2) {
+                if (filename)
+                    args.unshift(filename)
+
+                spawn(dotnet2, args, { stdio: "inherit" })
+                    .on("exit", callback)
+            } else {
+                suggestSolutions()
+                callback(0x7e)
+            }
+        })
     }
 }
 
 module.exports.getDotNetPath = getDotNetPath
+module.exports.installDotNet = installDotNet
