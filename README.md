@@ -18,11 +18,21 @@ $ npm install dotnet-run
 ### JavaScript
 
 ```js
-const run = require('dotnet-run');
+const run = require("dotnet-run")
 
-run('hello.dll', ['javascript', 'typescript'], process.exit);
+run("hello.dll", ["javascript", "typescript"], process.exit)
 
 // => Hello, javascript and typescript!
+```
+
+```js
+const { getDotNetPath, installDotNet } = require("dotnet-run")
+
+const dotnet = getDotNetPath()
+
+if (!dotnet) {
+    installDotNet(process.exit)
+}
 ```
 
 ## Contributing
