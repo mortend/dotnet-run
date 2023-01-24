@@ -1,5 +1,6 @@
 const { getDotNetPath } = require(".")
 const readlineSync = require("readline-sync")
+const spawn = require("child_process").spawn
 const bash = require("xbash")
 
 const dotnet = getDotNetPath()
@@ -17,4 +18,16 @@ if (!process.stdout.isTTY ||
 }
 
 // https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
-bash(["-c", "curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin"], process.exit)
+
+if (process.platform === "win32") {
+    const ps = spawn("powershell.exe", [
+        "-NoProfile", "-ExecutionPolicy", "unrestricted", "-Command",
+        "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://dot.net/v1/dotnet-install.ps1')))"
+    ])
+    ps.stdout.on("data", data => console.log(data.toString()))
+    ps.stderr.on("data", data => console.error(data.toString()))
+    ps.on("exit", process.exit)
+    ps.stdin.end()
+} else {
+    bash(["-c", "curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin"], process.exit)
+}

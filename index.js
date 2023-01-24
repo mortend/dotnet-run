@@ -12,13 +12,22 @@ function getDotNetPath() {
         return dotnet
     }
 
-    // ~/.dotnet/dotnet
-    const homedir = os.homedir()
-    const dotnetHome = path.join(homedir, ".dotnet")
-    const dotnetHomeExe = path.join(dotnetHome, "dotnet")
+    if (process.platform === "win32") {
+        // %LOCALAPPDATA%\Microsoft\dotnet\dotnet.exe
+        const localappdata = process.env.LOCALAPPDATA
+        const localappdataExe = path.join(localappdata, "Microsoft", "dotnet", "dotnet.exe")
 
-    if (fs.existsSync(dotnetHomeExe))
-        return dotnetHomeExe
+        if (fs.existsSync(localappdataExe))
+            return localappdataExe
+    } else {
+        // ~/.dotnet/dotnet
+        const homedir = os.homedir()
+        const dotnetHome = path.join(homedir, ".dotnet")
+        const dotnetHomeExe = path.join(dotnetHome, "dotnet")
+
+        if (fs.existsSync(dotnetHomeExe))
+            return dotnetHomeExe
+    }
 }
 
 function suggestSolutions() {
