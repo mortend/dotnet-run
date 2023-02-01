@@ -12,6 +12,7 @@
     "test": "node test/test.js"
   },
   "files": [
+    "index.d.ts",
     "index.js",
     "install.js"
   ],
