@@ -4,7 +4,6 @@ const path = require("path")
 const which = require("which")
 const { spawn } = require("child_process")
 const readlineSync = require("readline-sync")
-const bash = require("xbash")
 
 function getDotNetPath() {
     for (const dotnet of which.sync("dotnet", {
@@ -45,7 +44,13 @@ function installDotNet(callback) {
         ps.on("exit", callback)
         ps.stdin.end()
     } else {
-        bash(["-c", "curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin"], callback)
+        const bash = spawn("bash", [
+            "-c", "curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin"
+        ])
+        bash.stdout.on("data", data => console.log(data.toString()))
+        bash.stderr.on("data", data => console.error(data.toString()))
+        bash.on("exit", callback)
+        bash.stdin.end()
     }
 }
 

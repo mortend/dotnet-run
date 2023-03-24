@@ -4,8 +4,7 @@
   "description": "Run .NET programs easily on all platforms",
   "dependencies": {
     "readline-sync": "^1.4.10",
-    "which": "^2.0.2",
-    "xbash": "^1.6.0"
+    "which": "^2.0.2"
   },
   "scripts": {
     "install": "node install.js",
