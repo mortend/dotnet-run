@@ -6,9 +6,13 @@
     "readline-sync": "^1.4.10",
     "which": "^2.0.2"
   },
+  "devDependencies": {
+    "typescript": "^5.0.2"
+  },
   "scripts": {
     "install": "node install.js",
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "tsc": "tsc index.d.ts"
   },
   "files": [
     "index.d.ts",
