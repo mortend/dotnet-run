@@ -31,27 +31,28 @@ function getDotNetPath() {
     }
 }
 
-function installDotNet(callback) {
+function installDotNet() {
     // https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
-
-    if (process.platform === "win32") {
-        const ps = spawn("powershell.exe", [
-            "-NoProfile", "-ExecutionPolicy", "unrestricted", "-Command",
-            "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://dot.net/v1/dotnet-install.ps1')))"
-        ])
-        ps.stdout.on("data", data => console.log(data.toString()))
-        ps.stderr.on("data", data => console.error(data.toString()))
-        ps.on("exit", callback)
-        ps.stdin.end()
-    } else {
-        const bash = spawn("bash", [
-            "-c", "curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin"
-        ])
-        bash.stdout.on("data", data => console.log(data.toString()))
-        bash.stderr.on("data", data => console.error(data.toString()))
-        bash.on("exit", callback)
-        bash.stdin.end()
-    }
+    return new Promise(resolve => {
+        if (process.platform === "win32") {
+            const ps = spawn("powershell.exe", [
+                "-NoProfile", "-ExecutionPolicy", "unrestricted", "-Command",
+                "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://dot.net/v1/dotnet-install.ps1')))"
+            ])
+            ps.stdout.on("data", data => console.log(data.toString()))
+            ps.stderr.on("data", data => console.error(data.toString()))
+            ps.on("exit", resolve)
+            ps.stdin.end()
+        } else {
+            const bash = spawn("bash", [
+                "-c", "curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin"
+            ])
+            bash.stdout.on("data", data => console.log(data.toString()))
+            bash.stderr.on("data", data => console.error(data.toString()))
+            bash.on("exit", resolve)
+            bash.stdin.end()
+        }
+    })
 }
 
 function suggestSolutions() {
@@ -73,41 +74,46 @@ function suggestSolutions() {
     console.log("    https://dotnet.microsoft.com/download/dotnet-core/6.0\n")
 }
 
-module.exports = (filename, args, callback) => {
-    const dotnet = getDotNetPath()
+module.exports = (filename, args) => {
+    if (!args)
+        args = []
 
-    if (dotnet) {
-        if (filename)
-            args.unshift(filename)
+    return new Promise(resolve => {
+        const dotnet = getDotNetPath()
 
-        spawn(dotnet, args, { stdio: "inherit" })
-            .on("exit", callback)
-    } else {
-        console.error("fatal: The 'dotnet' command was not found")
+        if (dotnet) {
+            if (filename)
+                args.unshift(filename)
 
-        if (!process.stdout.isTTY ||
-            !readlineSync.keyInYN("\nDo you want to install .NET now?")) {
-            suggestSolutions()
-            callback(0x7f)
-        }
+            spawn(dotnet, args, { stdio: "inherit" })
+                .on("exit", resolve)
+        } else {
+            console.error("fatal: The 'dotnet' command was not found")
 
-        installDotNet(result => {
-            console.log("\n.NET installer completed:", result)
-
-            const dotnet2 = getDotNetPath()
-
-            if (dotnet2) {
-                if (filename)
-                    args.unshift(filename)
-
-                spawn(dotnet2, args, { stdio: "inherit" })
-                    .on("exit", callback)
-            } else {
+            if (!process.stdout.isTTY ||
+                !readlineSync.keyInYN("\nDo you want to install .NET now?")) {
                 suggestSolutions()
-                callback(0x7e)
+                resolve(0x7f)
             }
-        })
-    }
+
+            installDotNet(result => {
+                console.log("\n.NET installer completed:", result)
+
+                const dotnet2 = getDotNetPath()
+
+                if (dotnet2) {
+                    if (filename)
+                        args.unshift(filename)
+
+                    spawn(dotnet2, args, { stdio: "inherit" })
+                        .on("exit", resolve)
+                } else {
+                    suggestSolutions()
+                    resolve(0x7e)
+                }
+            })
+        }
+    })
 }
 
 module.exports.getDotNetPath = getDotNetPath

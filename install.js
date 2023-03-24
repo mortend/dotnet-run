@@ -15,4 +15,4 @@ if (!process.stdout.isTTY ||
     return 0
 }
 
-installDotNet(process.exit)
+installDotNet().then(process.exit)

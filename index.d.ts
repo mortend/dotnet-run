@@ -1,5 +1,5 @@
 /** Run a dotnet assembly */
-declare function runDotNet(filename: string | undefined, args: string[], callback: (result?: number) => void): void
+declare async function runDotNet(filename: string | undefined, args?: string[]): Promise<number?>
 
 /** Sub functions */
 declare namespace runDotNet {
@@ -7,7 +7,7 @@ declare namespace runDotNet {
     function getDotNetPath(): string | undefined
 
     /** Run the dotnet install script */
-    function installDotNet(callback: (result?: number) => void): void
+    async function installDotNet(): Promise<number?>
 }
 
 export = runDotNet
