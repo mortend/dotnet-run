@@ -10,9 +10,10 @@
 
 ## Install
 
+```sh
+npm install dotnet-run
 ```
-$ npm install dotnet-run
-```
+
 ## Usage
 
 ### JavaScript
@@ -20,7 +21,7 @@ $ npm install dotnet-run
 ```js
 const run = require("dotnet-run")
 
-run("hello.dll", ["javascript", "typescript"], process.exit)
+await run("hello.dll", ["javascript", "typescript"])
 
 // => Hello, javascript and typescript!
 ```
@@ -31,7 +32,7 @@ const { getDotNetPath, installDotNet } = require("dotnet-run")
 const dotnet = getDotNetPath()
 
 if (!dotnet) {
-    installDotNet(process.exit)
+    await installDotNet()
 }
 ```
 
