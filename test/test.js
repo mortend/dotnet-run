@@ -1,3 +1,4 @@
 const run = require("..")
 const path = require("path")
-run(path.join(__dirname, "net6.0", "test.dll"), []).then(process.exit)
+const filename = path.join(__dirname, "net6.0", "test.dll")
+run(filename).then(process.exit)
